@@ -3,6 +3,12 @@ import { useForm } from '@inertiajs/vue3';
 import { Modal } from 'flowbite';
 import { ref, onMounted, reactive, inject } from 'vue';
 
+const props = defineProps({
+    roles: {
+        type: Object
+    }
+});
+
 let swal = inject('$swal')
 
 let modalObjet = ref();
@@ -20,7 +26,6 @@ const form = useForm({
     precioUni: null,
     status: true
 });
-
 
 const openModal = () => {
     modalObjet.show();
@@ -45,13 +50,15 @@ const swalAlert = () => {
 
 const submit = () => {
 
-    form.post(route('productos.store'), {
-        onSuccess: () => {
-            form.reset()
-            closeModal()
-            swalAlert()
-        }
-    })
+    form.post(route('productos.store')
+    // , {
+    //     onSuccess: () => {
+    //         form.reset()
+    //         closeModal()
+    //         swalAlert()
+    //     }
+    // }
+    )
 };
 
 </script>
@@ -66,7 +73,7 @@ const submit = () => {
     </div>
     <div id="create-modal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
                 <!-- Modal header -->
@@ -90,8 +97,8 @@ const submit = () => {
                     <form class="mx-auto" @submit.prevent="submit">
                         <div class="mb-5">
                             <label for="producto"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Producto</label>
-                            <input type="text" id="producto" name="producto" v-model="form.producto"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" v-model="form.nombre"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Nombre del producto" />
                             <span class="text-red-600" v-if="form.errors.producto">{{ form.errors.producto }}</span>

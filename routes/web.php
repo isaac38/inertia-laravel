@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
 
     //Rutas de usuarios dentro de configuraciones
     Route::get('/config/usuarios', [UserController::class, 'index'])->name('config.user.index');
+    Route::post('/config/usuarios', [UserController::class, 'store'])->name('config.user.store');
 
 
 

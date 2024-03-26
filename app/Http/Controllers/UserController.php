@@ -15,7 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $usuarios = User::with('roles')->get();
-        return Inertia::render('Configuraciones/Usuarios/Usuarios', ['usuarios' => $usuarios]);
+        $roles = Role::all();
+        return Inertia::render('Configuraciones/Usuarios/Usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
     }
 
     /**
@@ -31,7 +32,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
