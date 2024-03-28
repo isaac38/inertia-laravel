@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-class UserController extends Controller
+class PerimissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $usuarios = User::with('roles')->get();
-        $roles = Role::all();
-        return Inertia::render('Configuraciones/Usuarios/Usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
+        $permisos = Permission::all();
+        return Inertia::render('Configuraciones/Permisos/Permisos', ['permisos' => $permisos]);
     }
 
     /**
@@ -33,22 +30,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        try {
-            $user = new User;
-            $user->nombre = $request->nombre;
-            $user->apellidoP = $request->apellidoP;
-            $user->apellidoM = $request->apellidoM;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->assignRole($request->rol);
-
-            $user->save();
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-        return to_route('config.user.index');
 
     }
 
@@ -81,6 +62,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // try {
+        //     $rol = Role::find($id);
+        //     $rol->delete();
+        // } catch (\Throwable $th) {
+        //     throw $th;
+        // }
+
+        // return to_route('config.role.index');
     }
 }

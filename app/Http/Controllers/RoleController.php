@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $usuarios = User::with('roles')->get();
         $roles = Role::all();
-        return Inertia::render('Configuraciones/Usuarios/Usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
+        $permisos = Permission::all();
+        return Inertia::render('Configuraciones/Roles/Roles', [
+            'roles' => $roles,
+            'permisos' => $permisos
+        ]);
     }
 
     /**
@@ -33,23 +35,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
-            $user = new User;
-            $user->nombre = $request->nombre;
-            $user->apellidoP = $request->apellidoP;
-            $user->apellidoM = $request->apellidoM;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->assignRole($request->rol);
+            $rol = new Role;
+            $rol->name = $request->name;
+            $rol->syncPermissions($request->permisos);
 
-            $user->save();
+            $rol->save();
         } catch (\Throwable $th) {
             throw $th;
         }
-        return to_route('config.user.index');
 
+        return to_route('config.role.index');
     }
 
     /**
@@ -81,6 +77,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $rol = Role::find($id);
+            $rol->delete();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
+        return to_route('config.role.index');
     }
 }

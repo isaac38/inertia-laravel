@@ -13,13 +13,30 @@ import { Head } from '@inertiajs/vue3';
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <a :href="route('config.user.index')"
+                <div class="grid grid-cols-4 gap-4">
+                    <a :href="route('config.user.index')"
                     class="flex justify-center flex-col block max-w-64 p-6 bg-white border border-gray-200 rounded-lg shadow-2xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <font-awesome-icon class="h-32" icon="fa-solid fa-user" />
 
                     <h5 class="mt-2 mb-1 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Usuarios</h5>
                 </a>
+                <a :href="route('config.role.index')"
+                    class="flex justify-center flex-col block max-w-64 p-6 bg-white border border-gray-200 rounded-lg shadow-2xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <font-awesome-icon class="h-32" icon="fa-solid fa-users-gear" />
+
+                    <h5 class="mt-2 mb-1 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Roles</h5>
+                </a>
+
+                <a :href="route('config.permisos.index')"
+                    class="flex justify-center flex-col block max-w-64 p-6 bg-white border border-gray-200 rounded-lg shadow-2xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <font-awesome-icon class="h-32" icon="fa-solid fa-user-shield" />
+
+                    <h5 class="mt-2 mb-1 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Permisos</h5>
+                </a>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>

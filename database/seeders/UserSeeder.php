@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             'nombre' => 'Luis isaac',
             'apellidoP' => 'Muñoz',
             'apellidoM' => '',
-            'name' => 'admin',
+            'username' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345')
         ])->assignRole('Admin');
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'nombre' => 'fulano',
             'apellidoP' => 'de',
             'apellidoM' => 'tal',
-            'name' => 'usuario1',
+            'username' => 'usuario1',
             'email' => 'usuario1@gmail.com',
             'password' => bcrypt('12345')
         ])->assignRole('Capturista');

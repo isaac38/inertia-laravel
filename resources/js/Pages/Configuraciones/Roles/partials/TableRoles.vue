@@ -3,14 +3,14 @@ import { reactive } from 'vue';
 // import ModalUpdateProduct from './ModalUpdateProduct.vue';
 import { Link, router } from '@inertiajs/vue3';
 const props = defineProps({
-    usuarios: {
+    roles: {
         type: Object
     }
 });
 
-// const destroy = (id) => {
-//     router.delete(route('producto.destroy', id))
-// };
+const destroy = (id) => {
+    router.delete(route('config.role.destroy', id))
+};
 
 </script>
 
@@ -19,43 +19,24 @@ const props = defineProps({
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Nombre
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Usuario
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Email
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Rol
                 </th>
-                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3">
+                </th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(usuario, index) in usuarios" :key="usuario.id"
+            <tr v-for="(rol, index) in roles" :key="rol.id"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ usuario.nombre }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}
+                    {{ rol.name }}
                 </th>
-                <td class="px-6 py-4">
-                    {{ usuario.username }}
-                </td>
-                <td class="px-6 py-4">
-                    {{ usuario.email }}
-                </td>
-                <td class="px-6 py-4">
-                    <p v-for="rol in usuario.roles" :key="rol.id">
-                        {{ rol.name }}
-                    </p>
-                </td>
                 <td class="px-6 py-4">
                     <button type="button"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         style="cursor: pointer;">Edit</button>
                     |
-                    <button type="button"
+                    <button type="button" @click="destroy(rol.id)"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         style="cursor: pointer;">Delete</button>
                 </td>

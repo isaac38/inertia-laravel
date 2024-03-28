@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PerimissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
@@ -53,8 +55,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/config/usuarios', [UserController::class, 'index'])->name('config.user.index');
     Route::post('/config/usuarios', [UserController::class, 'store'])->name('config.user.store');
 
+    //Rutas de Roles dentro de configuraciones
+    Route::get('/config/roles', [RoleController::class, 'index'])->name('config.role.index');
+    Route::post('/config/roles', [RoleController::class, 'store'])->name('config.role.store');
+    Route::delete('/config/roles/{id}', [RoleController::class, 'destroy'])->name('config.role.destroy');
 
-
+    //Rutas de Permisos dentro de configuraciones
+    Route::get('/config/permisos', [PerimissionController::class, 'index'])->name('config.permisos.index');
 });
 
 
