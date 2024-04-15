@@ -1,16 +1,15 @@
 <script setup>
-import { reactive } from 'vue';
-// import ModalUpdateProduct from './ModalUpdateProduct.vue';
-import { Link, router } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+import ModalUpdateUsuarios from './ModalUpdateUsuarios.vue';
+import { router } from '@inertiajs/vue3';
 const props = defineProps({
-    usuarios: {
-        type: Object
-    }
+    usuarios: Object,
+    roles: Object
 });
 
-// const destroy = (id) => {
-//     router.delete(route('producto.destroy', id))
-// };
+const destroy = (id) => {
+    router.delete(route('config.user.delete', id))
+};
 
 </script>
 
@@ -51,13 +50,13 @@ const props = defineProps({
                     </p>
                 </td>
                 <td class="px-6 py-4">
-                    <button type="button"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        style="cursor: pointer;">Edit</button>
+                    <ModalUpdateUsuarios :usuario="usuario" :roles="roles"/>
                     |
-                    <button type="button"
+                    <button type="button" @click="destroy(usuario.id)"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        style="cursor: pointer;">Delete</button>
+                        style="cursor: pointer;">
+                        Delete
+                    </button>
                 </td>
             </tr>
         </tbody>

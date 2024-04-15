@@ -7,10 +7,11 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    name: '',
+    nombre: '',
+    apellidoP: '',
+    apellidoM: '',
     email: '',
     password: '',
-    password_confirmation: '',
 });
 
 const submit = () => {
@@ -26,19 +27,67 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="nombre" value="Nombre" />
 
                 <TextInput
-                    id="name"
+                    id="nombre"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.nombre"
                     required
                     autofocus
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.nombre" />
+            </div>
+
+            <div>
+                <InputLabel for="apellidoP" value="ApellidoP" />
+
+                <TextInput
+                    id="apellidoP"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.apellidoP"
+                    required
+                    autofocus
+                    autocomplete="name"
+                />
+
+                <InputError class="mt-2" :message="form.errors.nombre" />
+            </div>
+
+            <div>
+                <InputLabel for="apellidoM" value="ApellidoM" />
+
+                <TextInput
+                    id="apellidoM"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.apellidoM"
+                    required
+                    autofocus
+                    autocomplete="name"
+                />
+
+                <InputError class="mt-2" :message="form.errors.nombre" />
+            </div>
+
+            <div>
+                <InputLabel for="username" value="Username" />
+
+                <TextInput
+                    id="username"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.username"
+                    required
+                    autofocus
+                    autocomplete="name"
+                />
+
+                <InputError class="mt-2" :message="form.errors.nombre" />
             </div>
 
             <div class="mt-4">
@@ -69,21 +118,6 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

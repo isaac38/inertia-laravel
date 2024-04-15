@@ -1,18 +1,18 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { Modal } from 'flowbite';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineProps } from 'vue';
 
 const props = defineProps({
-    producto: Object
+    usuario: Object,
+    roles: Object
 });
-
 
 let modalObjet = ref();
 
 
 onMounted(() => {
-    let modalElement = document.getElementById(`update-modal${props.producto.id}`);
+    let modalElement = document.getElementById(`update-modal${props.usuario.id}`);
     modalObjet = new Modal(modalElement);
 })
 
@@ -20,7 +20,6 @@ onMounted(() => {
 
 const openModal = () => {
     modalObjet.show();
-
 }
 
 const closeModal = () => {
@@ -28,17 +27,19 @@ const closeModal = () => {
 }
 
 const form = useForm({
-    id: props.producto?.id,
-    producto: props.producto?.producto,
-    descripcion: props.producto?.descripcion,
-    categoria: props.producto?.categoria,
-    stock: props.producto?.stock,
-    precioUni: props.producto?.precioUni,
-    status: props.producto?.status == 1 ? true : false
+    id: props.usuario?.id,
+    nombre: props.usuario?.nombre,
+    apellidoP: props.usuario?.apellidoP,
+    apellidoM: props.usuario?.apellidoM,
+    username: props.usuario?.username,
+    email: props.usuario?.email,
+    password: null,
+    rol: props.usuario?.roles[0].name
 });
 
+
 function submit() {
-    form.put(route('producto.update'))
+    form.put(route('config.user.update'))
     closeModal()
 };
 
@@ -73,53 +74,60 @@ function submit() {
                 <div class="p-4 md:p-5 space-y-4">
                     <form class="mx-auto" @submit.prevent="submit()">
                         <div class="mb-5">
-                            <label for="producto"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Producto</label>
-                            <input type="text" id="producto" name="producto" v-model="form.producto"
+                            <label for="nombre"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" v-model="form.nombre"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Nombre del producto" required />
+                                placeholder="Nombre" required />
                         </div>
                         <div class="mb-5">
-                            <label for="categoria"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
-                            <input type="text" id="categoria" name="categoria" v-model="form.categoria"
+                            <label for="apellidoP"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos paterno</label>
+                            <input type="text" id="apellidoP" name="apellidoP" v-model="form.apellidoP"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Nombre del producto" required />
+                                placeholder="Apellido paterno" required />
                         </div>
                         <div class="mb-5">
-                            <label for="descripcion"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion</label>
-                            <textarea id="descripcion" name="descripcion" rows="4" v-model="form.descripcion"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Descripcion del producto"></textarea>
-                        </div>
-                        <div class="mb-5">
-                            <label for="stock"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock</label>
-                            <input type="number" id="stock" name="stock" v-model="form.stock"
+                            <label for="apellidoM"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido materno</label>
+                            <input type="text" id="apellidoM" name="apellidoM" v-model="form.apellidoM"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+                                placeholder="Apellido materno" required />
                         </div>
                         <div class="mb-5">
-                            <label for="precioUni"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio
-                                unitario</label>
-                            <input type="number" id="precioUni" name="precioUni" v-model="form.precioUni"
+                            <label for="username"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de usuario</label>
+                            <input type="text" id="username" name="username" v-model="form.username"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+                                placeholder="Usuario" required />
                         </div>
                         <div class="mb-5">
-                            <label class="inline-flex items-center mb-5 cursor-pointer">
-                                <input type="checkbox" id="status" name="status" class="sr-only peer"
-                                    v-model="form.status" checked>
-                                <div
-                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                </div>
-                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Activo</span>
-                            </label>
+                            <label for="email"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
+                            <input type="email" id="email" name="email" v-model="form.email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Correo electronico" required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="password"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                            <input type="text" id="password" name="password" v-model="form.password"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Nueva contraseña" />
+                        </div>
+                        <div class="mb-5">
+                            <label for="roles"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Roles</label>
+                            <select id="roles" name="roles" v-model="form.rol"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option v-for="role in roles" :key="role.id" :value="role.name">{{ role.name }}
+                                </option>
+                            </select>
                         </div>
                         <button type="submit" :data-modal-hide="`update-modal${form.id}`"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Submit
+                        </button>
                     </form>
                 </div>
                 <!-- Modal footer -->

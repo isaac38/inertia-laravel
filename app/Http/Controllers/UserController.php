@@ -71,9 +71,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        try {
+            $user = User::find($request->id);
+            $user->nombre = $request->nombre;
+            $user->apellidoP = $request->apellidoP;
+            $user->apellidoM = $request->apellidoM;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+            }
+            $user->assignRole($request->rol);
+            $user->save();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        return to_route('config.user.index');
     }
 
     /**
@@ -81,6 +96,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd($id);
     }
 }

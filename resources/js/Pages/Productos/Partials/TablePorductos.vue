@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { defineProps } from 'vue';
 import ModalUpdateProduct from './ModalUpdateProduct.vue';
 import { Link, router } from '@inertiajs/vue3';
 const props = defineProps({

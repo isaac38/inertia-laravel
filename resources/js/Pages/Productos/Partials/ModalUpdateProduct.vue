@@ -1,7 +1,7 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { Modal } from 'flowbite';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineProps } from 'vue';
 
 const props = defineProps({
     producto: Object

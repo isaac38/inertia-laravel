@@ -1,6 +1,7 @@
 <script setup>
+import { defineProps } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, router, useForm } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import TablePorductos from './Partials/TablePorductos.vue';
 import ModalCreateProduct from './Partials/ModalCreateProduct.vue'
 

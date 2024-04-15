@@ -1,8 +1,9 @@
 <script setup>
+import { defineProps } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import TableUsuarios from './partials/TableUsuarios.vue';
 import ModalCreateUsuarios from './partials/ModalCreateUsuarios.vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
     usuarios: {
@@ -25,7 +26,7 @@ const props = defineProps({
             <ModalCreateUsuarios :roles="roles"/>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="relative overflow-x-auto shadow-2xl">
-                    <TableUsuarios :usuarios="usuarios" />
+                    <TableUsuarios :usuarios="usuarios" :roles="roles"/>
                 </div>
             </div>
         </div>

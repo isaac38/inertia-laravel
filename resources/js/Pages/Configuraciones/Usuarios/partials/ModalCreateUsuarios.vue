@@ -1,7 +1,7 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { Modal } from 'flowbite';
-import { ref, onMounted, reactive, inject } from 'vue';
+import { ref, onMounted, defineProps, inject } from 'vue';
 
 const props = defineProps({
     roles: {

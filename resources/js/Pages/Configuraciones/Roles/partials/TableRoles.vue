@@ -1,9 +1,12 @@
 <script setup>
-import { reactive } from 'vue';
-// import ModalUpdateProduct from './ModalUpdateProduct.vue';
-import { Link, router } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+import ModalUpdateRol from './ModalUpdateRol.vue';
+import { router } from '@inertiajs/vue3';
 const props = defineProps({
     roles: {
+        type: Object
+    },
+    permisos: {
         type: Object
     }
 });
@@ -32,9 +35,7 @@ const destroy = (id) => {
                     {{ rol.name }}
                 </th>
                 <td class="px-6 py-4">
-                    <button type="button"
-                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        style="cursor: pointer;">Edit</button>
+                    <ModalUpdateRol :rol="rol" :permisos="permisos"/>
                     |
                     <button type="button" @click="destroy(rol.id)"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"

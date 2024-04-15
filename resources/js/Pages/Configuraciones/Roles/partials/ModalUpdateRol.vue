@@ -1,27 +1,27 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { Modal } from 'flowbite';
-import { ref, onMounted, inject } from 'vue';
+import { onMounted, ref, defineProps, inject } from 'vue';
+
+let swal = inject('$swal');
 
 const props = defineProps({
-    permisos: {
+    rol: {
         type: Object
+    },
+    permisos:{
+        type:Object
     }
 });
 
-let swal = inject('$swal')
-
-let modalObjet = ref();
-
 onMounted(() => {
-    const targetEl = document.querySelector('#create-modal');
-    modalObjet = new Modal(targetEl);
+    let modalElement = document.getElementById(`update-modal${props.rol.id}`);
+    modalObjet = new Modal(modalElement);
 })
 
-const form = useForm({
-    name: null,
-    permisos: []
-});
+let permissionsInRole = props.rol.permissions.map(item => item.name);
+
+let modalObjet = ref();
 
 const openModal = () => {
     modalObjet.show();
@@ -40,15 +40,20 @@ const swalAlert = () => {
         timer: 3000,
 
         icon: 'success',
-        title: 'El usuario se a creado'
+        title: 'El rol se actualiso'
     });
 }
 
-const submit = () => {
+const form = useForm({
+    id: props.rol?.id,
+    name: props.rol?.name,
+    permisos: permissionsInRole
+});
 
-    form.post(route('config.role.store'), {
+function submit() {
+    form.put(route('config.role.update'), {
         onSuccess: () => {
-            form.reset()
+            // form.reset()
             closeModal()
             swalAlert()
         }
@@ -58,26 +63,22 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-auto sm:py-6 lg:pt-8">
-        <button @click="openModal"
-            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button">
-            Nuevo rol
-        </button>
-    </div>
-    <div id="create-modal" tabindex="-1" aria-hidden="true"
+
+    <button type="button" @click="openModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+        Edit
+    </button>
+    <div :id="`update-modal${form.id}`" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-4xl max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900">
-                        Agregar rol
+                        Editar producto
                     </h3>
                     <button type="button" @click="closeModal"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                        data-modal-hide="create-modal">
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

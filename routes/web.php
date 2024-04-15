@@ -54,14 +54,18 @@ Route::middleware('auth')->group(function () {
     //Rutas de usuarios dentro de configuraciones
     Route::get('/config/usuarios', [UserController::class, 'index'])->name('config.user.index');
     Route::post('/config/usuarios', [UserController::class, 'store'])->name('config.user.store');
+    Route::put('/config/usuarios', [UserController::class, 'update'])->name('config.user.update');
+    Route::delete('/config/usuarios/{id}', [UserController::class, 'destroy'])->name('config.user.delete');
 
     //Rutas de Roles dentro de configuraciones
     Route::get('/config/roles', [RoleController::class, 'index'])->name('config.role.index');
     Route::post('/config/roles', [RoleController::class, 'store'])->name('config.role.store');
+    Route::put('/config/roles', [RoleController::class, 'update'])->name('config.role.update');
     Route::delete('/config/roles/{id}', [RoleController::class, 'destroy'])->name('config.role.destroy');
 
     //Rutas de Permisos dentro de configuraciones
     Route::get('/config/permisos', [PerimissionController::class, 'index'])->name('config.permisos.index');
+    Route::post('/config/permisos', [PerimissionController::class, 'store'])->name('config.permisos.store');
 });
 
 

@@ -1,4 +1,5 @@
 <script setup>
+import { defineProps } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import TableRoles from './partials/TableRoles.vue';
@@ -11,8 +12,8 @@ const props = defineProps ({
     permisos:{
         type: Object
     }
-
 });
+
 </script>
 <template>
     <Head title="Configuraciones - roles"/>
@@ -24,7 +25,7 @@ const props = defineProps ({
             <ModalCreateRoles :permisos="permisos"/>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="relative overflow-x-auto shadow-2xl">
-                    <TableRoles :roles="roles"/>
+                    <TableRoles :roles="roles" :permisos="permisos"/>
                 </div>
             </div>
         </div>

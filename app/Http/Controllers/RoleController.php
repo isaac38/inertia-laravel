@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::with('permissions')->get();
         $permisos = Permission::all();
         return Inertia::render('Configuraciones/Roles/Roles', [
             'roles' => $roles,
@@ -67,9 +67,20 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // dd($request);
+        try {
+            $rol = Role::find($request->id);
+            $rol->name = $request->name;
+            $rol->syncPermissions($request->permisos);
+
+            $rol->save();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
+        return to_route('config.role.index');
     }
 
     /**
