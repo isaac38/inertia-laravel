@@ -10,7 +10,7 @@ const props = defineProps({
 
 
 const destroy = (id) => {
-    // router.delete(route('config.role.destroy', id))
+    // router.delete(route('config_role_destroy', id))
 };
 
 </script>

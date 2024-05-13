@@ -43,29 +43,29 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
 
     // Rutas de productos
-    Route::get('/productos', [ProductController::class, 'index'])->name('productos.index');
-    Route::post('/productos', [ProductController::class, 'store'])->name('productos.store');
-    Route::put('/producto', [ProductController::class, 'update'])->name('producto.update');
-    Route::delete('/producto/{id}', [ProductController::class, 'destroy'])->name('producto.destroy');
+    Route::get('/productos', [ProductController::class, 'index'])->name('productos_index');
+    Route::post('/productos', [ProductController::class, 'store'])->name('productos_store');
+    Route::put('/producto', [ProductController::class, 'update'])->name('producto_update');
+    Route::delete('/producto/{id}', [ProductController::class, 'destroy'])->name('producto_destroy');
 
     //Rutas de configuraciones
-    Route::get('/config', [ConfigController::class, 'index'])->name('config.index');
+    Route::get('/config', [ConfigController::class, 'index'])->name('config_index');
 
     //Rutas de usuarios dentro de configuraciones
-    Route::get('/config/usuarios', [UserController::class, 'index'])->name('config.user.index');
-    Route::post('/config/usuarios', [UserController::class, 'store'])->name('config.user.store');
-    Route::put('/config/usuarios', [UserController::class, 'update'])->name('config.user.update');
-    Route::delete('/config/usuarios/{id}', [UserController::class, 'destroy'])->name('config.user.delete');
+    Route::get('/config/usuarios', [UserController::class, 'index'])->name('config_user_index');
+    Route::post('/config/usuarios', [UserController::class, 'store'])->name('config_user_store');
+    Route::put('/config/usuarios', [UserController::class, 'update'])->name('config_user_update');
+    Route::delete('/config/usuarios/{id}', [UserController::class, 'destroy'])->name('config_user_delete');
 
     //Rutas de Roles dentro de configuraciones
-    Route::get('/config/roles', [RoleController::class, 'index'])->name('config.role.index');
-    Route::post('/config/roles', [RoleController::class, 'store'])->name('config.role.store');
-    Route::put('/config/roles', [RoleController::class, 'update'])->name('config.role.update');
-    Route::delete('/config/roles/{id}', [RoleController::class, 'destroy'])->name('config.role.destroy');
+    Route::get('/config/roles', [RoleController::class, 'index'])->name('config_role_index');
+    Route::post('/config/roles', [RoleController::class, 'store'])->name('config_role_store');
+    Route::put('/config/roles', [RoleController::class, 'update'])->name('config_role_update');
+    Route::delete('/config/roles/{id}', [RoleController::class, 'destroy'])->name('config_role_destroy');
 
     //Rutas de Permisos dentro de configuraciones
-    Route::get('/config/permisos', [PerimissionController::class, 'index'])->name('config.permisos.index');
-    Route::post('/config/permisos', [PerimissionController::class, 'store'])->name('config.permisos.store');
+    Route::get('/config/permisos', [PerimissionController::class, 'index'])->name('config_permisos_index');
+    Route::post('/config/permisos', [PerimissionController::class, 'store'])->name('config_permisos_store');
 });
 
 

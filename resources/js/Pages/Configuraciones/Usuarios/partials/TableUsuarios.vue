@@ -1,14 +1,17 @@
 <script setup>
-import { defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 import ModalUpdateUsuarios from './ModalUpdateUsuarios.vue';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 const props = defineProps({
     usuarios: Object,
-    roles: Object
+    roles: Object,
+    permisos: Object
 });
 
+const $page = usePage();
+
 const destroy = (id) => {
-    router.delete(route('config.user.delete', id))
+    router.delete(route('config_user_delete', id))
 };
 
 </script>
@@ -50,9 +53,14 @@ const destroy = (id) => {
                     </p>
                 </td>
                 <td class="px-6 py-4">
-                    <ModalUpdateUsuarios :usuario="usuario" :roles="roles"/>
+                    <ModalUpdateUsuarios
+                    :usuario="usuario"
+                    :roles="roles"
+                    :permisos="permisos"
+                    />
                     |
-                    <button type="button" @click="destroy(usuario.id)"
+                    <button
+                        type="button" @click="destroy(usuario.id)"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         style="cursor: pointer;">
                         Delete

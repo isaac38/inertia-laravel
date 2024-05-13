@@ -46,7 +46,7 @@ const swalAlert = () => {
 
 const submit = () => {
 
-    form.post(route('config.role.store'), {
+    form.post(route('config_role_store'), {
         onSuccess: () => {
             form.reset()
             closeModal()

@@ -45,7 +45,7 @@ class RoleController extends Controller
             throw $th;
         }
 
-        return to_route('config.role.index');
+        return to_route('config_role_index');
     }
 
     /**
@@ -80,7 +80,7 @@ class RoleController extends Controller
             throw $th;
         }
 
-        return to_route('config.role.index');
+        return to_route('config_role_index');
     }
 
     /**
@@ -95,6 +95,6 @@ class RoleController extends Controller
             throw $th;
         }
 
-        return to_route('config.role.index');
+        return to_route('config_role_index');
     }
 }

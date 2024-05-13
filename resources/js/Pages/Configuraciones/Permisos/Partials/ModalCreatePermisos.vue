@@ -38,7 +38,6 @@ const swalAlert = () => {
         position: 'top-end',
         showConfirmButton: false,
         timer: 3000,
-
         icon: 'success',
         title: 'El permiso se a creado'
     });
@@ -46,7 +45,7 @@ const swalAlert = () => {
 
 const submit = () => {
 
-    form.post(route('config.permisos.store'), {
+    form.post(route('config_permisos_store'), {
             onSuccess: () => {
                 form.reset()
                 closeModal()

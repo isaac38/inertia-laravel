@@ -53,7 +53,7 @@ class ProductController extends Controller
             throw $th;
         }
 
-        return to_route('productos.index');
+        return to_route('productos_index');
     }
 
     /**
@@ -101,7 +101,7 @@ class ProductController extends Controller
             throw $th;
         }
 
-        return to_route('productos.index');
+        return to_route('productos_index');
     }
 
     /**
@@ -115,6 +115,6 @@ class ProductController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
-        return to_route('productos.index');
+        return to_route('productos_index');
     }
 }

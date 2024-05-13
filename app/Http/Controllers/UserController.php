@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -15,9 +16,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::with('roles')->get();
-        $roles = Role::all();
-        return Inertia::render('Configuraciones/Usuarios/Usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
+        $usuarios = User::with('roles', 'permissions')->get();
+        $roles = Role::select('id', 'name')->get();
+        $permisos = Permission::select('id', 'name', 'description')->get();
+        return Inertia::render('Configuraciones/Usuarios/Usuarios', [
+            'usuarios' => $usuarios,
+            'roles' => $roles,
+            'permisos' => $permisos
+        ]);
     }
 
     /**
@@ -33,7 +39,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+            // dd($request);
         try {
             $user = new User;
             $user->nombre = $request->nombre;
@@ -44,11 +50,15 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->assignRole($request->rol);
 
+
+
             $user->save();
+
+
+            return to_route('config_user_index');
         } catch (\Throwable $th) {
             throw $th;
         }
-        return to_route('config.user.index');
 
     }
 
@@ -80,15 +90,29 @@ class UserController extends Controller
             $user->apellidoM = $request->apellidoM;
             $user->username = $request->username;
             $user->email = $request->email;
+
             if ($request->password) {
                 $user->password = Hash::make($request->password);
             }
-            $user->assignRole($request->rol);
+            //actualizar rol
+            $user->syncRoles($request->rol);
+
+
+            //asignar permisos al usuario individualmente
+            $permisosArrayName = [];
+            $rol = Role::findByName($request->rol);
+            $permisos = $rol->permissions;
+            foreach ($permisos as $permiso) {
+                $permisosArrayName[] = $permiso->name;
+            }
+            // $permisosArrayName;
+            $user->syncPermissions($permisosArrayName);
+
             $user->save();
         } catch (\Throwable $th) {
             throw $th;
         }
-        return to_route('config.user.index');
+        return to_route('config_user_index');
     }
 
     /**

@@ -51,7 +51,7 @@ const form = useForm({
 });
 
 function submit() {
-    form.put(route('config.role.update'), {
+    form.put(route('config_role_update'), {
         onSuccess: () => {
             // form.reset()
             closeModal()

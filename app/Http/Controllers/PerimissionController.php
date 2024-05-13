@@ -14,7 +14,9 @@ class PerimissionController extends Controller
     public function index()
     {
         $permisos = Permission::paginate(10);
-        return Inertia::render('Configuraciones/Permisos/Permisos', ['permisos' => $permisos]);
+        return Inertia::render('Configuraciones/Permisos/Permisos', [
+            'permisos' => $permisos
+        ]);
     }
 
     /**
@@ -41,7 +43,7 @@ class PerimissionController extends Controller
             throw $th;
         }
 
-        return to_route('config.permisos.index');
+        return to_route('config_permisos_index');
     }
 
     /**
