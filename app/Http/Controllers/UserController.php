@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
@@ -16,44 +18,52 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::with('roles', 'permissions')->get();
-        $roles = Role::select('id', 'name')->get();
-        $permisos = Permission::select('id', 'name', 'description')->get();
-        return Inertia::render('Configuraciones/Usuarios/Usuarios', [
-            'usuarios' => $usuarios,
-            'roles' => $roles,
-            'permisos' => $permisos
-        ]);
+        try {
+            $usuarios = User::all()->load('roles', 'permissions');
+            $roles = Role::select('id', 'name')->get();
+            $permisos = Permission::select('id', 'name', 'description')->get();
+            // Debugbar::info($usuarios->toArray());
+            return Inertia::render('Configuraciones/Usuarios/Usuarios', [
+                'usuarios' => $usuarios,
+                'roles' => $roles,
+                'permisos' => $permisos
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-            // dd($request);
-        try {
+        // dd($request->all());
+        try {        
             $user = new User;
-            $user->nombre = $request->nombre;
-            $user->apellidoP = $request->apellidoP;
-            $user->apellidoM = $request->apellidoM;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->assignRole($request->rol);
+            $user->nombre = $request->input('nombre');
+            $user->apellidoP = $request->input('apellidoP');
+            $user->apellidoM = $request->input('apellidoM');
+            $user->username = $request->input('username');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
 
+            //en caso de que no se seleccione un rol asignar el rol de Sin Rol
+            if ($request->input('rol') == null) {
+                $user->assignRole('Sin Asignar');
+                // dd('Entra Sin Rol');
+            }else{
+                // dd($request->rol);
+                $user->assignRole($request->input('rol'));
+            }
 
+            //asignar permisos al usuario individualmente resive un array de permisos
+            if ($request->input('permisos')) {
+                $user->givePermissionTo($request->input('permisos'));
+            }
+
+            // dd($user->toArray());
 
             $user->save();
-
 
             return to_route('config_user_index');
         } catch (\Throwable $th) {
@@ -106,6 +116,7 @@ class UserController extends Controller
                 $permisosArrayName[] = $permiso->name;
             }
             // $permisosArrayName;
+            dd($permisosArrayName);
             $user->syncPermissions($permisosArrayName);
 
             $user->save();

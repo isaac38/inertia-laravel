@@ -5,8 +5,14 @@ import { ref, onMounted, defineProps, inject } from 'vue';
 import Permisos from '../../Permisos/Permisos.vue';
 
 const props = defineProps({
-    roles: Object,
-    permisos: Object
+    roles: {
+        type: Object,
+        default: () => ({})
+    },
+    permisos: {
+        type: Object,
+        default: () => ({})
+    }
 });
 
 let swal = inject('$swal')
@@ -70,7 +76,7 @@ const submit = () => {
             <button @click="openModal"
                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
-                Nuevo producto <font-awesome-icon icon="fa-solid fa-plus" />
+                Nuevo usuario <font-awesome-icon icon="fa-solid fa-plus" />
             </button>
         </div>
     </div>
@@ -105,7 +111,7 @@ const submit = () => {
                                 <input type="text" id="nombre" name="nombre" v-model="form.nombre"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Nombre" />
-                                <!-- <span class="text-red-600" v-if="form.errors.producto">{{ form.errors.producto }}</span> -->
+                                <span class="text-red-600" v-if="form.errors.nombre">{{ form.errors.nombre }}</span>
                             </div>
                             <div class="mb-5">
                                 <label for="apellidoP"
@@ -114,7 +120,7 @@ const submit = () => {
                                 <input type="text" id="apellidoP" name="apellidoP" v-model="form.apellidoP"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Apellido paterno" />
-                                <!-- <span class="text-red-600" v-if="form.errors.categoria">{{ form.errors.categoria }}</span> -->
+                                <span class="text-red-600" v-if="form.errors.apellidoP">{{ form.errors.apellidoP }}</span>
                             </div>
                             <div class="mb-5">
                                 <label for="apellidoM"
@@ -123,7 +129,7 @@ const submit = () => {
                                 <input type="text" id="apellidoM" name="apellidoM" v-model="form.apellidoM"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Apellido materno" />
-                                <!-- <span class="text-red-600" v-if="form.errors.categoria">{{ form.errors.categoria }}</span> -->
+                                <span class="text-red-600" v-if="form.errors.apellidoM">{{ form.errors.apellidoM }}</span>
                             </div>
                         </div>
                         <div class="mb-5">
@@ -133,16 +139,16 @@ const submit = () => {
                             <input type="text" id="username" name="username" v-model="form.username"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Nombre de usuario" />
-                            <!-- <span class="text-red-600" v-if="form.errors.categoria">{{ form.errors.categoria }}</span> -->
+                            <span class="text-red-600" v-if="form.errors.username">{{ form.errors.username }}</span>
                         </div>
                         <div class="gap-8 columns-2">
                             <div class="mb-5">
                                 <label for="email"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                <input type="email" id="email" name="email" v-model="form.email"
+                                <input type="text" id="email" name="email" v-model="form.email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Correo electronico" />
-                                <!-- <span class="text-red-600" v-if="form.errors.categoria">{{ form.errors.categoria }}</span> -->
+                                <span class="text-red-600" v-if="form.errors.email">{{ form.errors.email }}</span>
                             </div>
                             <div class="mb-5">
                                 <label for="password"
@@ -150,7 +156,7 @@ const submit = () => {
                                 <input type="text" id="password" name="password" v-model="form.password"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Contraseña" />
-                                <!-- <span class="text-red-600" v-if="form.errors.categoria">{{ form.errors.categoria }}</span> -->
+                                <span class="text-red-600" v-if="form.errors.password">{{ form.errors.password }}</span>
                             </div>
                         </div>
                         <div class="mb-5">
@@ -182,7 +188,8 @@ const submit = () => {
                             </div>
                         </div>
                         <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            :disabled="form.processing">Guardar</button>
                     </form>
                 </div>
                 <!-- Modal footer -->

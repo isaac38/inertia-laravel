@@ -6,12 +6,20 @@ import ModalCreateUsuarios from './partials/ModalCreateUsuarios.vue';
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
-    usuarios: Object,
-    roles: Object,
-    permisos : Object
+    usuarios:{
+        type: Object,
+        default: () => ({})
+    },
+    roles: {
+        type: Object,
+        default: () => ({})
+    },
+    permisos : {
+        type: Object,
+        default: () => ({})
+    }
 });
 
-// console.log(props.permisos);
 
 </script>
 
@@ -28,11 +36,20 @@ const props = defineProps({
             />
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="relative overflow-x-auto shadow-2xl">
-                    <TableUsuarios
-                    :usuarios="usuarios"
-                    :roles="roles"
-                    :permisos="permisos"
-                    />
+                    <!-- <template v-if="usuarios.roles"> -->
+                        <TableUsuarios
+                        :usuarios="usuarios"
+                        :roles="roles"
+                        :permisos="permisos"
+                        />
+                    <!-- </template> -->
+                    <!-- <template v-else>
+                        <div class="flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-2xl text-gray-500">No hay usuarios registrados</p>
+                            </div>
+                        </div>
+                    </template>     -->
                 </div>
             </div>
         </div>

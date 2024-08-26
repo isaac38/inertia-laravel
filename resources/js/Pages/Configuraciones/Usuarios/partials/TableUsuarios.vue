@@ -8,7 +8,11 @@ const props = defineProps({
     permisos: Object
 });
 
-const $page = usePage();
+// console.log(props.usuarios);
+
+// const $page = usePage();
+
+// console.log($page);
 
 const destroy = (id) => {
     router.delete(route('config_user_delete', id))
@@ -48,6 +52,7 @@ const destroy = (id) => {
                     {{ usuario.email }}
                 </td>
                 <td class="px-6 py-4">
+                    
                     <p v-for="rol in usuario.roles" :key="rol.id">
                         {{ rol.name }}
                     </p>

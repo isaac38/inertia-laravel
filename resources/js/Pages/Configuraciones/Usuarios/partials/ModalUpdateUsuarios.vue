@@ -4,9 +4,18 @@ import { Modal } from 'flowbite';
 import { onMounted, ref, defineProps } from 'vue';
 
 const props = defineProps({
-    usuario: Object,
-    roles: Object,
-    permisos: Object
+    usuario: {
+        type: Object,
+        default: () => ({})
+    },
+    roles: {
+        type: Object,
+        default: () => ({})
+    },
+    permisos: {
+        type: Object,
+        default: () => ({})
+    }
 });
 
 let modalObjet = ref();

@@ -14,16 +14,18 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $poductos_index = Permission::create(['name' => 'productos.index', 'description' => 'Ver productos']);
-        $poductos_creata = Permission::create(['name' => 'productos.create', 'description' => 'Crear productos']);
-        $poductos_edit = Permission::create(['name' => 'productos.edit', 'description' => 'Editar productos']);
-        $poductos_delete = Permission::create(['name' => 'productos.delete', 'description' => 'Eliminar productos']);
+        $poductos_index = Permission::create(['name' => 'productos_index', 'description' => 'Ver productos']);
+        $poductos_creata = Permission::create(['name' => 'productos_create', 'description' => 'Crear productos']);
+        $poductos_edit = Permission::create(['name' => 'productos_edit', 'description' => 'Editar productos']);
+        $poductos_delete = Permission::create(['name' => 'productos_delete', 'description' => 'Eliminar productos']);
 
         $admin = Role::create(['name' => 'Admin'])
         ->syncPermissions([$poductos_index, $poductos_creata,$poductos_edit,$poductos_delete]);
 
         $capturista = Role::create(['name' => 'Capturista'])
         ->syncPermissions([$poductos_index, $poductos_creata,$poductos_edit]);
+
+        $sin_asignar = Role::create(['name' => 'Sin asignar']);
 
     }
 }
